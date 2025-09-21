@@ -4,6 +4,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -53,7 +54,7 @@ public class MainWindow {
         balancePanel.add(balanceLabel);
 
         JPanel viewPanel = new JPanel();
-        viewPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 5));
+        viewPanel.setLayout(new BoxLayout(viewPanel, BoxLayout.Y_AXIS));
         viewPanel.setBackground(Color.GREEN);
 
         addNumber.addActionListener(new ActionListener() {
