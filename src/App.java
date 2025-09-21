@@ -7,7 +7,8 @@ public class App {
 
             @Override
             public void run() {
-                MainWindow frame = new MainWindow();
+                MainWindow mainFrame = new MainWindow();
+                
             }
         });
     }
