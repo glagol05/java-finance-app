@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class MainWindow {
@@ -57,28 +58,43 @@ public class MainWindow {
         viewPanel.setLayout(new BoxLayout(viewPanel, BoxLayout.Y_AXIS));
         viewPanel.setBackground(Color.GREEN);
 
+        JScrollPane scrollPane = new JScrollPane(viewPanel);
+
+        JLabel errorLabel = new JLabel("");
+        errorLabel.setForeground(Color.RED);
+        viewPanel.add(errorLabel);
+
         addNumber.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int value = Integer.parseInt(inputCost.getText());
-                total += value;
-                balanceLabel.setText("Your total balance: " + Integer.toString(total) + " kr");
 
-                String description = inputDescription.getText();
+                try {
+                    int value = Integer.parseInt(inputCost.getText());
 
-                expenseLabel = new JLabel();
-                expenseLabel.setText(description + ": " + Integer.toString(value) + " kr");
-                viewPanel.add(expenseLabel);
+                    errorLabel.setText("");
 
-                inputDescription.setText("");
-                inputCost.setText("");
+                    total += value;
+                    balanceLabel.setText("Your total balance: " + Integer.toString(total) + " kr");
+
+                    String description = inputDescription.getText();
+
+                    expenseLabel = new JLabel();
+                    expenseLabel.setText(description + ": " + Integer.toString(value) + " kr");
+                    viewPanel.add(expenseLabel);
+
+                    inputDescription.setText("");
+                    inputCost.setText("");
+
+                } catch (NumberFormatException ex) {
+                    errorLabel.setText("Please enter a valid number!");
+                }
             }
         });
 
         inputPanel.add(addNumber);
 
+        frame.add(scrollPane, BorderLayout.CENTER);
         frame.add(inputPanel, BorderLayout.NORTH);
-        frame.add(viewPanel, BorderLayout.CENTER);
         frame.add(balancePanel, BorderLayout.SOUTH);
     }
 
