@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ public class IncomeActionListener implements ActionListener {
     private JLabel balanceLabel;
     private JLabel incomeInfoLabel;
     private JPanel viewPanelIncome;
+    private JPanel viewPanel;
 
     private MainWindow main;
 
@@ -20,7 +22,8 @@ public class IncomeActionListener implements ActionListener {
                                 JLabel errorLabel,
                                 JLabel balanceLabel,
                                 JLabel incomeInfoLabel,
-                                JPanel viewPanelIncome) {
+                                JPanel viewPanelIncome,
+                                JPanel viewPanel) {
         this.main = main;
         this.inputDescription = inputDescription;
         this.inputCost = inputCost;
@@ -28,6 +31,7 @@ public class IncomeActionListener implements ActionListener {
         this.balanceLabel = balanceLabel;
         this.incomeInfoLabel = incomeInfoLabel;
         this.viewPanelIncome = viewPanelIncome;
+        this.viewPanel = viewPanel;
     }
 
     @Override
@@ -38,6 +42,8 @@ public class IncomeActionListener implements ActionListener {
             errorLabel.setText("");
 
             JLabel dateLabel = new JLabel(LocalDate.now().toString());
+            LocalDate date = LocalDate.now();
+
             String description = inputDescription.getText();
 
             JPanel row = new JPanel();
@@ -47,16 +53,17 @@ public class IncomeActionListener implements ActionListener {
             JButton removeBtn = new JButton("Remove income");
             row.add(removeBtn);
 
-            // Update totals
             main.addIncome(incomeValue);
             balanceLabel.setText("Your total balance: " + main.getTotal() + " kr");
             incomeInfoLabel.setText("Total income: " + main.getTotalIncome() + " kr");
+
+            Transaction income = new Transaction(description, incomeValue, date, true);
+            System.out.println(income);
 
             viewPanelIncome.add(row);
             viewPanelIncome.revalidate();
             viewPanelIncome.repaint();
 
-            // Remove button logic
             removeBtn.addActionListener(ev -> {
                 main.removeIncome(incomeValue);
                 balanceLabel.setText("Your total balance: " + main.getTotal() + " kr");
@@ -72,6 +79,8 @@ public class IncomeActionListener implements ActionListener {
 
         } catch (NumberFormatException ex) {
             errorLabel.setText("Please enter a valid number!");
+            errorLabel.setForeground(Color.RED);
+            
         }
     }
 }

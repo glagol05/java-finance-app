@@ -34,19 +34,40 @@ public class MainWindow {
         this.frame.setVisible(true);
 
         JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 5));
-        inputPanel.setBackground(Color.RED);
-        inputPanel.setPreferredSize(new Dimension(frame.getWidth(), 70));
+        inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
+        inputPanel.setBackground(Color.GREEN);
+        inputPanel.setPreferredSize(new Dimension(frame.getWidth(), 120));
 
         JTextArea inputDescription = new JTextArea(1,20);
         inputDescription.setFont(new Font("Arial", Font.PLAIN, 16));
-        inputPanel.add(inputDescription);
 
         JTextArea inputCost = new JTextArea(1, 20);
         inputCost.setFont(new Font("Arial", Font.PLAIN, 16));
-        inputPanel.add(inputCost);
 
         JButton addNumber = new JButton("Add income");
+
+        JTextArea expenseDescription = new JTextArea(1, 20);
+        expenseDescription.setFont(new Font("Arial", Font.PLAIN, 16));
+
+        JTextArea expenseCost = new JTextArea(1, 20);
+        expenseCost.setFont(new Font("Arial", Font.PLAIN, 16));
+
+        JButton addExpense = new JButton("Add expense");
+
+        JPanel fieldsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
+        fieldsPanel.add(inputDescription);
+        fieldsPanel.add(inputCost);
+        fieldsPanel.add(addNumber);
+        fieldsPanel.add(expenseDescription);
+        fieldsPanel.add(expenseCost);
+        fieldsPanel.add(addExpense);
+
+        inputPanel.add(fieldsPanel);
+
+        JLabel errorLabel = new JLabel("");
+        errorLabel.setForeground(Color.RED);
+        errorLabel.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        inputPanel.add(errorLabel);
 
         JPanel balancePanel = new JPanel();
         balancePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 5));
@@ -86,32 +107,13 @@ public class MainWindow {
         scrollContainer.add(scrollPaneIncome);
         scrollContainer.add(scrollPaneExpense);
 
-
-        JLabel errorLabel = new JLabel("");
-        errorLabel.setForeground(Color.RED);
-        viewPanel.add(errorLabel);
-
         addNumber.addActionListener(
-            new IncomeActionListener(this, inputDescription, inputCost, errorLabel, balanceLabel, incomeInfoLabel, viewPanelIncome)
+            new IncomeActionListener(this, inputDescription, inputCost, errorLabel, balanceLabel, incomeInfoLabel, viewPanelIncome, viewPanel)
         );
 
-        inputPanel.add(addNumber);
-
-        JTextArea expenseDescription = new JTextArea(1, 20);
-        expenseDescription.setFont(new Font("Arial", Font.PLAIN, 16));
-        inputPanel.add(expenseDescription);
-
-        JTextArea expenseCost = new JTextArea(1, 20);
-        expenseCost.setFont(new Font("Arial", Font.PLAIN, 16));
-        inputPanel.add(expenseCost);
-
-        JButton addExpense = new JButton("Add expense");
-
-         addExpense.addActionListener(
-            new ExpenseActionListener(this, expenseDescription, expenseCost, errorLabel, balanceLabel, expenseInfoLabel, viewPanelExpense)
+        addExpense.addActionListener(
+            new ExpenseActionListener(this, expenseDescription, expenseCost, errorLabel, balanceLabel, expenseInfoLabel, viewPanelExpense, viewPanel)
         );
-
-        inputPanel.add(addExpense);
 
         frame.add(scrollContainer, BorderLayout.CENTER);
         frame.add(inputPanel, BorderLayout.NORTH);

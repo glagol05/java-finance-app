@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ public class ExpenseActionListener implements ActionListener {
     private JLabel balanceLabel;
     private JLabel expenseInfoLabel;
     private JPanel viewPanelExpense;
+    private JPanel viewPanel;
 
     private MainWindow main;
 
@@ -20,7 +22,8 @@ public class ExpenseActionListener implements ActionListener {
                                 JLabel errorLabel,
                                 JLabel balanceLabel,
                                 JLabel expenseInfoLabel,
-                                JPanel viewPanelExpense) {
+                                JPanel viewPanelExpense,
+                                JPanel viewPanel) {
         this.main = main;
         this.expenseDescription = expenseDescription;
         this.expenseCost = expenseCost;
@@ -28,6 +31,7 @@ public class ExpenseActionListener implements ActionListener {
         this.balanceLabel = balanceLabel;
         this.expenseInfoLabel = expenseInfoLabel;
         this.viewPanelExpense = viewPanelExpense;
+        this.viewPanel = viewPanel;
     }
 
     @Override
@@ -38,6 +42,7 @@ public class ExpenseActionListener implements ActionListener {
             errorLabel.setText("");
 
             JLabel dateLabel = new JLabel(LocalDate.now().toString());
+            LocalDate date = LocalDate.now();
             String description = expenseDescription.getText();
 
             JPanel row = new JPanel();
@@ -50,6 +55,9 @@ public class ExpenseActionListener implements ActionListener {
             main.addExpense(expenseValue);
             balanceLabel.setText("Your total balance: " + main.getTotal() + " kr");
             expenseInfoLabel.setText("Total expenses: " + main.getTotalExpense() + " kr");
+
+            Transaction expense = new Transaction(description, expenseValue, date, false);
+            System.out.println(expense);            
 
             viewPanelExpense.add(row);
             viewPanelExpense.revalidate();
@@ -70,6 +78,8 @@ public class ExpenseActionListener implements ActionListener {
 
         } catch (NumberFormatException ex) {
             errorLabel.setText("Please enter a valid number!");
+            errorLabel.setBackground(Color.RED);
+
         }
     }
 }
