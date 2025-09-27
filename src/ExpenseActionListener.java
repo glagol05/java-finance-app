@@ -12,7 +12,6 @@ public class ExpenseActionListener implements ActionListener {
     private JLabel balanceLabel;
     private JLabel expenseInfoLabel;
     private JPanel viewPanelExpense;
-    private JPanel viewPanel;
 
     private MainWindow main;
 
@@ -22,8 +21,7 @@ public class ExpenseActionListener implements ActionListener {
                                 JLabel errorLabel,
                                 JLabel balanceLabel,
                                 JLabel expenseInfoLabel,
-                                JPanel viewPanelExpense,
-                                JPanel viewPanel) {
+                                JPanel viewPanelExpense) {
         this.main = main;
         this.expenseDescription = expenseDescription;
         this.expenseCost = expenseCost;
@@ -31,7 +29,6 @@ public class ExpenseActionListener implements ActionListener {
         this.balanceLabel = balanceLabel;
         this.expenseInfoLabel = expenseInfoLabel;
         this.viewPanelExpense = viewPanelExpense;
-        this.viewPanel = viewPanel;
     }
 
     @Override
@@ -57,7 +54,10 @@ public class ExpenseActionListener implements ActionListener {
             expenseInfoLabel.setText("Total expenses: " + main.getTotalExpense() + " kr");
 
             Transaction expense = new Transaction(description, expenseValue, date, false);
-            System.out.println(expense);            
+            SaveTransaction saver = new SaveTransaction();
+            saver.saveData(expense);
+            ReadTransaction reader = new ReadTransaction();
+            reader.loadData();
 
             viewPanelExpense.add(row);
             viewPanelExpense.revalidate();

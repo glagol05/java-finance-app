@@ -12,7 +12,6 @@ public class IncomeActionListener implements ActionListener {
     private JLabel balanceLabel;
     private JLabel incomeInfoLabel;
     private JPanel viewPanelIncome;
-    private JPanel viewPanel;
 
     private MainWindow main;
 
@@ -22,8 +21,7 @@ public class IncomeActionListener implements ActionListener {
                                 JLabel errorLabel,
                                 JLabel balanceLabel,
                                 JLabel incomeInfoLabel,
-                                JPanel viewPanelIncome,
-                                JPanel viewPanel) {
+                                JPanel viewPanelIncome) {
         this.main = main;
         this.inputDescription = inputDescription;
         this.inputCost = inputCost;
@@ -31,7 +29,6 @@ public class IncomeActionListener implements ActionListener {
         this.balanceLabel = balanceLabel;
         this.incomeInfoLabel = incomeInfoLabel;
         this.viewPanelIncome = viewPanelIncome;
-        this.viewPanel = viewPanel;
     }
 
     @Override
@@ -58,7 +55,10 @@ public class IncomeActionListener implements ActionListener {
             incomeInfoLabel.setText("Total income: " + main.getTotalIncome() + " kr");
 
             Transaction income = new Transaction(description, incomeValue, date, true);
-            System.out.println(income);
+            SaveTransaction saver = new SaveTransaction();
+            saver.saveData(income);
+            ReadTransaction reader = new ReadTransaction();
+            reader.loadData();
 
             viewPanelIncome.add(row);
             viewPanelIncome.revalidate();

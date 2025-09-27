@@ -35,7 +35,6 @@ public class MainWindow {
 
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
-        inputPanel.setBackground(Color.GREEN);
         inputPanel.setPreferredSize(new Dimension(frame.getWidth(), 120));
 
         JTextArea inputDescription = new JTextArea(1,20);
@@ -107,12 +106,14 @@ public class MainWindow {
         scrollContainer.add(scrollPaneIncome);
         scrollContainer.add(scrollPaneExpense);
 
+        
+
         addNumber.addActionListener(
-            new IncomeActionListener(this, inputDescription, inputCost, errorLabel, balanceLabel, incomeInfoLabel, viewPanelIncome, viewPanel)
+            new IncomeActionListener(this, inputDescription, inputCost, errorLabel, balanceLabel, incomeInfoLabel, viewPanelIncome)
         );
 
         addExpense.addActionListener(
-            new ExpenseActionListener(this, expenseDescription, expenseCost, errorLabel, balanceLabel, expenseInfoLabel, viewPanelExpense, viewPanel)
+            new ExpenseActionListener(this, expenseDescription, expenseCost, errorLabel, balanceLabel, expenseInfoLabel, viewPanelExpense)
         );
 
         frame.add(scrollContainer, BorderLayout.CENTER);

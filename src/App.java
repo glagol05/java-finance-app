@@ -8,7 +8,6 @@ public class App {
             @Override
             public void run() {
                 MainWindow mainFrame = new MainWindow();
-                
             }
         });
     }
