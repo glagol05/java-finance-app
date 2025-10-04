@@ -1,9 +1,2 @@
-new line | 1000 | 2025-09-27 | true
-second line | 555 | 2025-09-27 | true
-third line | 1000 | 2025-09-27 | true
-fourth line | 500 | 2025-09-27 | true
-fifth line | 100 | 2025-09-27 | true
-sixth line | 1 | 2025-09-27 | true
-expense | 4 | 2025-09-27 | false
-New income | 1 | 2025-09-27 | true
-ddd | 222 | 2025-09-27 | true
+Cat sand | 48.64 | 2025-10-04 | false
+Bunyanya food | 1.0E10 | 2025-10-04 | false

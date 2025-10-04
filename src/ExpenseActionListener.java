@@ -1,4 +1,6 @@
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
@@ -6,14 +8,14 @@ import javax.swing.*;
 
 public class ExpenseActionListener implements ActionListener {
 
-    private JTextArea expenseDescription;
-    private JTextArea expenseCost;
-    private JLabel errorLabel;
-    private JLabel balanceLabel;
-    private JLabel expenseInfoLabel;
-    private JPanel viewPanelExpense;
+    private final JTextArea expenseDescription;
+    private final JTextArea expenseCost;
+    private final JLabel errorLabel;
+    private final JLabel balanceLabel;
+    private final JLabel expenseInfoLabel;
+    private final JPanel viewPanelExpense;
 
-    private MainWindow main;
+    private final MainWindow main;
 
     public ExpenseActionListener(MainWindow main,
                                 JTextArea expenseDescription,
@@ -34,19 +36,21 @@ public class ExpenseActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            int expenseValue = Integer.parseInt(expenseCost.getText());
+            double expenseValue = Double.parseDouble(expenseCost.getText());
 
             errorLabel.setText("");
 
-            JLabel dateLabel = new JLabel(LocalDate.now().toString());
-            LocalDate date = LocalDate.now();
+            JLabel dateLabel = new JLabel(main.getCurrentDate().toString());
+            LocalDate date = main.getCurrentDate();
+
             String description = expenseDescription.getText();
 
-            JPanel row = new JPanel();
+            JPanel row = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
             row.add(new JLabel(description + ": " + expenseValue + " kr"));
             row.add(dateLabel);
 
-            JButton removeBtn = new JButton("Remove expense");
+            JButton removeBtn = new JButton("remove");
             row.add(removeBtn);
 
             main.addExpense(expenseValue);
@@ -54,23 +58,33 @@ public class ExpenseActionListener implements ActionListener {
             expenseInfoLabel.setText("Total expenses: " + main.getTotalExpense() + " kr");
 
             Transaction expense = new Transaction(description, expenseValue, date, false);
+            main.getAllTransactionsList().add(expense);
+
             SaveTransaction saver = new SaveTransaction();
             saver.saveData(expense);
-            ReadTransaction reader = new ReadTransaction();
-            reader.loadData();
+
+            main.updateTotalsForDate(main.getCurrentDate());
 
             viewPanelExpense.add(row);
             viewPanelExpense.revalidate();
             viewPanelExpense.repaint();
 
-            removeBtn.addActionListener(ev -> {
+            removeBtn.addActionListener(_ -> {
                 main.removeExpense(expenseValue);
+                main.getAllTransactionsList().remove(expense);
+
                 balanceLabel.setText("Your total balance: " + main.getTotal() + " kr");
                 expenseInfoLabel.setText("Total expenses: " + main.getTotalExpense() + " kr");
+
+                main.updateTotalsForDate(main.getCurrentDate());
 
                 viewPanelExpense.remove(row);
                 viewPanelExpense.revalidate();
                 viewPanelExpense.repaint();
+
+                RemoveTransaction remove = new RemoveTransaction();
+                remove.removeData(expense);
+
             });
 
             expenseDescription.setText("");

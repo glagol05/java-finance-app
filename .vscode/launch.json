@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "finance-app_9e861229"
+        },
+        {
+            "type": "java",
+            "name": "Run App",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "finance-app",
+            "classPaths": [
+                "bin",
+                "lib/jcalendar-1.4.jar"
+            ]
+        }
+    ]
+}

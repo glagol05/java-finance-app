@@ -1,12 +1,12 @@
 import java.time.LocalDate;
 
 public class Transaction {
-    private String description;
-    private int amount;
-    private LocalDate date;
-    private boolean isIncome;
+    private final String description;
+    private final double amount;
+    private final LocalDate date;
+    private final boolean isIncome;
 
-    public Transaction(String description, int amount, LocalDate date, boolean isIncome) {
+    public Transaction(String description, double amount, LocalDate date, boolean isIncome) {
         this.description = description;
         this.amount = amount;
         this.date = date;
@@ -17,7 +17,7 @@ public class Transaction {
         return description;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
@@ -31,6 +31,6 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return description + " | " + amount + " kr | " + date + " | " + isIncome;
+        return description + " | " + amount + " | " + date + " | " + isIncome;
     }
 }
